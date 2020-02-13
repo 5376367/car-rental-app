@@ -1,0 +1,123 @@
+﻿@model theking.Models.Booking
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+
+
+<h2>Create</h2>
+<script type="text/javascript" src="~/Scripts/jquery-3.1.1.min.js"></script>
+
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Booking</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div>
+
+        <select name="CustID">
+            <option value="" selected>Choose Customer</option>
+            @foreach (var n in @ViewBag.ListOfCustomers)
+            {
+                <option value="@n.id"> @n.FirstName @n.LastName </option>
+
+            }
+
+        </select>
+        @Html.ActionLink("Add a new Customer", "Create", "Customers")
+    </div>
+
+    @foreach (var n in @ViewBag.PriceList)
+    {
+        <input type="radio" onclick="showPrice(@n.FreeKMs, @n.HighSeasonDay,@n.HighSeasonKM,@n.LowSeasonDay, @n.LowSeasonKM)" id="class_to_show_price" name="Class" value="@n.Class" />
+
+
+        <text>Class @n.Class</text>
+        <text>@n.Example or similar </text>
+        <img src="@n.ImageSource" />
+
+        <br />
+
+    }
+
+
+    <text>From:</text>
+
+    <div class="form-group">
+
+        <div class="col-md-10">
+            <input type="date" name="DateOut" min=@DateTime.Now.ToString("yyyy-MM-dd") id="date_out" onchange="showDates()">
+        </div>
+    </div>
+
+    <text>Until:</text>
+    <div class="form-group">
+
+        <div class="col-md-10">
+            <input type="date" name="DateIn" min=@DateTime.Now.ToString("yyyy-MM-dd") id="date_in" onchange="showDates()">
+        </div>
+    </div>
+
+    <div>
+        <div>This is just temporary. In final product, this choice will not be here, but season will be decided by dates chosen. </div>
+        <input type="radio" name="season" id="show_all" onclick="try_this('high')" value="high" />
+        high season
+        <input type="radio" name="season" id="show_all" onclick="try_this('low')" value="low" />
+        low season
+
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+<script>
+    function showPrice(freeKMs, highSeasonDay, highSeasonKM, lowSeasonDay, lowSeasonKM) {
+        window.freeKMs = freeKMs;
+        window.highSeasonDay = highSeasonDay;
+        window.highSeasonKM = highSeasonKM;
+        window.lowSeasonDay = lowSeasonDay;
+        window.lowSeasonKM = lowSeasonKM;
+       
+    };
+
+  
+    function try_this(season) {
+         var dateIn = new Date(document.getElementById("date_in").value);
+        var dateOut = new Date(document.getElementById("date_out").value);
+        var amountOfDays = (dateIn - dateOut) / 86400000;
+        var pricePerDay = season == "low" ? window.lowSeasonDay : window.highSeasonDay;
+        var pricePerKM = season == "low" ? window.lowSeasonKM : window.highSeasonKM;
+        alert("Since it is " + season + " season, price per day is " + pricePerDay + "₪. You want a car for " + amountOfDays + " days. That will cost you " + (pricePerDay * amountOfDays) + "₪. You get " + window.freeKMs + " free KMs per day. If you go over that you must pay " + pricePerKM + "₪ extra per km.");
+    }
+ </script>
+}

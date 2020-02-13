@@ -1,0 +1,82 @@
+﻿@model theking.Models.Price
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Price</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Class)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Class)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FreeKMs)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FreeKMs)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HighSeasonDay)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HighSeasonDay)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LowSeasonDay)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LowSeasonDay)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HighSeasonKM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HighSeasonKM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LowSeasonKM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LowSeasonKM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Example)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Example)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageSource)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImageSource)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

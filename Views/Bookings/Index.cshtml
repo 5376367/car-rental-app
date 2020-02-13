@@ -1,0 +1,157 @@
+﻿
+
+@model IEnumerable<theking.Models.ViewModels.BookingsViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+
+
+<h3>
+    @Html.ActionLink("+Add New Booking", "Create")
+</h3>
+
+
+
+<h2>Bookings for pickup today</h2>
+
+<table class="table">
+    <tr>
+        <th>Customer</th>
+        <th>Dates</th>
+        <th>Car Type</th>
+        <th>Notes</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.Booking.DateOut == DateTime.Today)
+        {
+            <tr>
+                <td>
+                    @item.Customer.FirstName
+                    @item.Customer.LastName
+                </td>
+                <td>
+                    @item.Booking.DateOut.Value.ToShortDateString() -
+                    @item.Booking.DateIn.Value.ToShortDateString()
+                </td>
+                <td>
+                    @item.Booking.Class
+                </td>
+                <td>
+                    @item.Booking.Notes
+                </td>
+
+
+                <td>
+                    @Html.ActionLink("give car", "CreateFromBooking", "rentals", new { CustID = item.Customer.id, Class = item.Booking.Class, DateIn = item.Booking.DateIn, Notes = item.Booking.Notes }, null) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Booking.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Booking.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Booking.id })
+                </td>
+
+            </tr>
+        }
+    }
+
+
+</table>
+
+
+<h2>Future Bookings</h2>
+
+<table class="table">
+    <tr>
+        <th>Customer</th>
+        <th>Dates</th>
+        <th>Car Type</th>
+        <th>Notes</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.Booking.DateOut > DateTime.Today)
+        {
+            <tr>
+                <td>
+                    @item.Customer.FirstName
+                    @item.Customer.LastName
+                </td>
+                <td>
+                    @item.Booking.DateOut.Value.ToShortDateString() -
+                    @item.Booking.DateIn.Value.ToShortDateString()
+                </td>
+                <td>
+                    @item.Booking.Class
+                </td>
+                <td>
+                    @item.Booking.Notes
+                </td>
+
+
+                <td>
+                    @Html.ActionLink("give car", "CreateFromBooking", "rentals", new { CustID = item.Customer.id, Class = item.Booking.Class, DateIn = item.Booking.DateIn, Notes = item.Booking.Notes }, null) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Booking.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Booking.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Booking.id })
+                </td>
+
+            </tr>
+        }
+    }
+
+
+</table>
+
+
+<h2>Expired Bookings - not picked up</h2>
+
+<table class="table">
+    <tr>
+        <th>Customer</th>
+        <th>Dates</th>
+        <th>Car Type</th>
+        <th>Notes</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.Booking.DateOut < DateTime.Today)
+        {
+            <tr>
+                <td>
+                    @item.Customer.FirstName
+                    @item.Customer.LastName
+                </td>
+                <td>
+                    @item.Booking.DateOut.Value.ToShortDateString() -
+                    @item.Booking.DateIn.Value.ToShortDateString()
+                </td>
+                <td>
+                    @item.Booking.Class
+                </td>
+                <td>
+                    @item.Booking.Notes
+                </td>
+
+
+                <td>
+                    @Html.ActionLink("give car", "CreateFromBooking", "rentals", new { CustID = item.Customer.id, Class = item.Booking.Class, DateIn = item.Booking.DateIn, Notes = item.Booking.Notes }, null) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Booking.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Booking.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Booking.id })
+                </td>
+
+            </tr>
+        }
+    }
+
+
+</table>

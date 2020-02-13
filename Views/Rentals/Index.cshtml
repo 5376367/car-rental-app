@@ -1,0 +1,299 @@
+﻿
+
+@model IEnumerable<theking.Models.ViewModels.RentalsViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+<h3>
+@Html.ActionLink("+New Rental", "CreateNoParams", "Rentals")
+    </h3>
+
+<h2>Current Rentals</h2>
+
+
+<table class="table">
+    <tr>
+        <th>Customer</th>
+        <th>Customer Notes</th>
+        <th>Car</th>
+        <th>Car Notes</th>
+        <th>Date Out</th>
+        <th>Date Due Back</th>
+        <th> Mileage Out</th>
+        <th> Rental Notes </th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        if (item.Rental.Status == true)
+        {
+            <tr>
+                <td>
+                    @item.Customer.FirstName
+                    @item.Customer.LastName
+                    @item.Customer.Email
+                </td>
+                <td>
+                    @item.Customer.Notes
+
+                </td>
+                <td>
+                    @item.Car.CarType
+                    @item.Car.Class
+                    @item.Car.Color
+                    @item.Car.Make
+                    @item.Car.Model
+                    @item.Car.LicensePlate
+                </td>
+                <td>
+                    @item.Car.Notes
+
+                </td>
+                <td>
+                    @item.Rental.DateOut.Value.ToShortDateString()
+                </td>
+                <td>
+                    @item.Rental.DateIn.Value.ToShortDateString() <br />
+                </td>
+                <td>
+                    @item.Rental.MileageOut km
+                </td>
+                <td>
+                    @item.Rental.Notes
+
+                </td>
+
+                <td>
+                    @Html.ActionLink("Return", "Return", new { id = item.Rental.id }) |
+
+                    (
+
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Rental.id }) |
+
+                    @Html.ActionLink("Details", "Details", new { id = item.Rental.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Rental.id })
+                    )
+                </td>
+
+            </tr>
+        }
+    }
+
+
+</table>
+
+<hr>
+
+<h2>Rentals Due Back Today</h2>
+
+
+<table class="table">
+    <tr>
+        <th>Customer</th>
+        <th>Customer Notes</th>
+        <th>Car</th>
+        <th>Car Notes</th>
+        <th>Date Out</th>
+        <th>Date Due Back</th>
+        <th> Mileage Out</th>
+        <th> Rental Notes </th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        if (item.Rental.DateIn == DateTime.Today && item.Rental.Status == true)
+        {
+            <tr>
+                <td>
+                    @item.Customer.FirstName
+                    @item.Customer.LastName
+                    @item.Customer.Email
+                </td>
+                <td>
+                    @item.Customer.Notes
+
+                </td>
+                <td>
+                    @item.Car.CarType
+                    @item.Car.Class
+                    @item.Car.Color
+                    @item.Car.Make
+                    @item.Car.Model
+                    @item.Car.LicensePlate
+                </td>
+                <td>
+                    @item.Car.Notes
+
+                </td>
+                <td>
+                    @item.Rental.DateOut.Value.ToShortDateString()
+                </td>
+                <td>
+                    @item.Rental.DateIn.Value.ToShortDateString() <br />
+                </td>
+                <td>
+                    @item.Rental.MileageOut km
+                </td>
+                <td>
+                    @item.Rental.Notes
+
+                </td>
+
+                <td>
+                    @Html.ActionLink("Return", "Return", new { id = item.Rental.id }) |
+
+                    (
+
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Rental.id }) |
+
+                    @Html.ActionLink("Details", "Details", new { id = item.Rental.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Rental.id })
+                    )
+                </td>
+
+            </tr>
+        }
+    }
+
+
+</table>
+
+
+<h2>Rentals Overdue</h2>
+
+
+<table class="table">
+    <tr>
+        <th>Customer</th>
+        <th>Customer Notes</th>
+        <th>Car</th>
+        <th>Car Notes</th>
+        <th>Date Out</th>
+        <th>Date Due Back</th>
+        <th> Mileage Out</th>
+        <th> Rental Notes </th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        if (item.Rental.DateIn < DateTime.Today && item.Rental.Status == true)
+        {
+            <tr>
+                <td>
+                    @item.Customer.FirstName
+                    @item.Customer.LastName
+                    @item.Customer.Email
+                </td>
+                <td>
+                    @item.Customer.Notes
+
+                </td>
+                <td>
+                    @item.Car.CarType
+                    @item.Car.Class
+                    @item.Car.Color
+                    @item.Car.Make
+                    @item.Car.Model
+                    @item.Car.LicensePlate
+                </td>
+                <td>
+                    @item.Car.Notes
+
+                </td>
+                <td>
+                    @item.Rental.DateOut.Value.ToShortDateString()
+                </td>
+                <td>
+                    @item.Rental.DateIn.Value.ToShortDateString() <br />
+                </td>
+                <td>
+                    @item.Rental.MileageOut km
+                </td>
+                <td>
+                    @item.Rental.Notes
+
+                </td>
+
+                <td>
+                    @Html.ActionLink("Return", "Return", new { id = item.Rental.id }) |
+
+                    (
+
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Rental.id }) |
+
+                    @Html.ActionLink("Details", "Details", new { id = item.Rental.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Rental.id })
+                    )
+                </td>
+
+            </tr>
+        }
+    }
+
+
+</table>
+<hr>
+
+
+
+<h2>Past Rentals</h2>
+
+
+<table class="table">
+    <tr>
+        <th>Customer</th>
+        <th>Car</th>
+        <th>Rental Dates</th>
+        <th> KMs used</th>
+        <th> Rental Notes</th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        if (item.Rental.Status == false)
+        {
+            <tr>
+                <td>
+                    @item.Customer.FirstName
+                    @item.Customer.LastName
+                </td>
+                <td>
+                    @item.Car.CarType
+                    @item.Car.Class
+                    @item.Car.Color
+                    @item.Car.Make
+                    @item.Car.Model
+                    @item.Car.LicensePlate
+                </td>
+                <td>
+                    @item.Rental.DateOut.Value.ToShortDateString() -
+                    @item.Rental.DateIn.Value.ToShortDateString()
+                </td>
+                <td>
+                    @{ int kmsused = item.Rental.MileageIn.Value - item.Rental.MileageOut.Value;}
+                    @kmsused km
+
+                </td>
+                <td>
+                    @item.Rental.Notes
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Rental.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Rental.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Rental.id })
+                </td>
+
+            </tr>
+        }
+    }
+
+
+</table>
+
+

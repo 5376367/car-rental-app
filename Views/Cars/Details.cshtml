@@ -1,0 +1,138 @@
+﻿@model theking.Models.Car
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Car</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Class)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Class)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Make)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Make)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Model)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Color)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Color)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Doors)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Doors)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KMs)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KMs)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LicensePlate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LicensePlate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOnRoad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOnRoad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NextServiceDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NextServiceDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NextServiceKMS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NextServiceKMS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusInService)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusInService)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusRented)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusRented)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

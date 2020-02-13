@@ -1,0 +1,88 @@
+﻿@model theking.Models.Price
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Price</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Class)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Class)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FreeKMs)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FreeKMs)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HighSeasonDay)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HighSeasonDay)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LowSeasonDay)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LowSeasonDay)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HighSeasonKM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HighSeasonKM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LowSeasonKM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LowSeasonKM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Example)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Example)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageSource)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImageSource)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

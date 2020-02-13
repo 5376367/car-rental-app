@@ -1,0 +1,391 @@
+﻿@model IEnumerable<theking.Models.Car>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>
+    @Html.ActionLink("+ Add a new car", "Create")
+</h3>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Search (make,model,color,type): @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+<h2>Available Cars</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Class", "Index", new { sortOrder = ViewBag.ClassSortParm })
+        </th>
+        <th>
+             @Html.ActionLink("Type", "Index", new { sortOrder = ViewBag.TypeSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Make", "Index", new { sortOrder = ViewBag.MakeSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Model", "Index", new { sortOrder = ViewBag.ModelSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Color", "Index", new { sortOrder = ViewBag.ColorSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Doors", "Index", new { sortOrder = ViewBag.DoorsSortParm })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KMs)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LicensePlate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOnRoad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NextServiceDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NextServiceKMS)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Notes)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.StatusRented == false && item.StatusInService == true && DateTime.Now < item.NextServiceDate.Value && item.KMs < item.NextServiceKMS)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CarType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Make)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Color)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Doors)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KMs)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LicensePlate)
+                </td>
+                <td>
+                    @item.DateOnRoad.Value.ToShortDateString()
+                </td>
+                <td>
+                    @item.NextServiceDate.Value.ToShortDateString()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NextServiceKMS)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notes)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id }) |
+                    @Html.ActionLink("Give This Car", "CreateFromCar", "Rentals", new { CarID = item.id }, null)
+                </td>
+            </tr>
+        }
+
+    }
+
+</table>
+
+<hr />
+
+
+<h2>Cars Rented Out</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Class)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CarType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Make)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Color)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Doors)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KMs)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LicensePlate)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.CustID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notes)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.StatusRented == true)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CarType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Make)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Color)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Doors)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KMs)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LicensePlate)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notes)
+                </td>
+                <td>
+                    @Html.ActionLink("Return Car", "ReturnFromCar", "Rentals", new { CarID = item.id }, null)
+                </td>
+
+
+            </tr>
+        }
+    }
+
+</table>
+
+<hr />
+
+
+<h2>Cars Needing service</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Class)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CarType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Make)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Color)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Doors)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KMs)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LicensePlate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOnRoad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NextServiceDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NextServiceKMS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notes)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (((DateTime.Now >= item.NextServiceDate.Value) || (item.KMs >= item.NextServiceKMS)) && (item.StatusInService == true))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CarType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Make)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Color)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Doors)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KMs)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LicensePlate)
+                </td>
+                <td>
+                    @item.DateOnRoad.Value.ToShortDateString()
+                </td>
+                <td>
+                    @item.NextServiceDate.Value.ToShortDateString()
+                    @((DateTime.Now >= item.NextServiceDate.Value) ? "car needs service" : "")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NextServiceKMS)
+                    @((item.KMs >= item.NextServiceKMS) ? "car needs service" : "")
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notes)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                    @Html.ActionLink("Send Car to Service", "Service", "Cars", new { id = item.id }, null)
+                </td>
+            </tr>
+
+        }
+
+    }
+
+</table>
+
+<hr />
+
+
+<h2>Cars Being Serviced</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Class)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CarType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Make)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Color)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Doors)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KMs)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LicensePlate)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Notes)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.StatusInService == false)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CarType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Make)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Color)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Doors)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KMs)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LicensePlate)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notes)
+                </td>
+                <td>
+
+                    @Html.ActionLink("Back from service", "BackFromService", "Cars", new { id = item.id }, null)
+                </td>
+            </tr>
+        }
+    }
+
+</table>
+
