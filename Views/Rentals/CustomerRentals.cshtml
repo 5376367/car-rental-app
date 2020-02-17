@@ -274,8 +274,7 @@
                     @item.Rental.DateIn.Value.ToShortDateString()
                 </td>
                 <td>
-                    @{ int kmsused = item.Rental.MileageIn.Value - item.Rental.MileageOut.Value;}
-                    @kmsused km
+                   @item.Rental.KMsUsed
 
                 </td>
                 <td>

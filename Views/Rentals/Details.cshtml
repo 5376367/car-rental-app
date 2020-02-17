@@ -1,4 +1,4 @@
-﻿@model theking.Models.Rental
+﻿@model theking.Models.ViewModels.RentalsViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -7,60 +7,93 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Rental</h4>
+    <h4>RentalsViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CustID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CustID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CarID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CarID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateOut)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateOut)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateIn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateIn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Notes)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Notes)
-        </dd>
-
     </dl>
 </div>
+<div>
+    Name:
+    @Model.Customer.FirstName
+    @Model.Customer.LastName
+    <br />
+    Email Address:
+    @Model.Customer.Email
+    <br />
+    DOB:
+    @Model.Customer.DOB.Value.ToShortDateString()
+    <br />
+    ID num:
+    @Model.Customer.IDnum
+    <br />
+    Member since:
+    @Model.Customer.MemberSince.Value.ToShortDateString()
+    <br />
+    <hr />
+    Car Details:
+    @Model.Car.CarType
+    @Model.Car.Make
+    @Model.Car.Model
+    @Model.Car.Color
+    <br />
+    Class:
+    @Model.Car.Class
+    <br />
+    License Plate:
+    @Model.Car.LicensePlate
+
+    <hr />
+    Date Taken:
+    @Model.Rental.DateOut.Value.ToShortDateString()
+    <br />
+    Return Date:
+    @Model.Rental.DateIn.Value.ToShortDateString()
+    <br />
+    Mileage when taken:
+    @Model.Rental.MileageOut
+    KMs
+    <br />
+    Mileage when returned:
+    @Model.Rental.MileageIn
+    KMs
+    <br />
+    KMs used:
+    @Model.Rental.KMsUsed
+    <br />
+    Free KMs per day:
+    @Model.Rental.FreeKMs
+    <br />
+    Days:
+    @Model.Rental.Days
+    <br />
+    Total Free KMs:
+    @{ var totalFree = Model.Rental.FreeKMs * Model.Rental.Days;}
+    @totalFree
+    <br />
+    KMs over limit:
+    @{ var overLimit = Model.Rental.KMsUsed - totalFree;}
+    @overLimit
+    <br />
+    Price per KM over limit:
+    @string.Format("{0:0.00}", Model.Rental.PriceKM)
+    <br />
+    Price per day:
+    @string.Format("{0:0.00}", Model.Rental.PriceDay)
+    <br />
+    Total Price:
+    @string.Format("{0:0.00}", Model.Rental.Price)
+    <br />
+    Season:
+    @{ var season = (Model.Rental.SeasonHigh == true) ? "High" : "Low"; }
+    @season
+    <br />
+    Notes:
+    @Model.Rental.Notes
+    <hr />
+
+
+</div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

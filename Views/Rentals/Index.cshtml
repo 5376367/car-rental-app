@@ -250,6 +250,7 @@
         <th>Rental Dates</th>
         <th> KMs used</th>
         <th> Rental Notes</th>
+        <th>Price</th>
     </tr>
 
 
@@ -275,12 +276,14 @@
                     @item.Rental.DateIn.Value.ToShortDateString()
                 </td>
                 <td>
-                    @{ int kmsused = item.Rental.MileageIn.Value - item.Rental.MileageOut.Value;}
-                    @kmsused km
+                    @item.Rental.KMsUsed
 
                 </td>
                 <td>
                     @item.Rental.Notes
+                </td>
+                <td>
+                    @string.Format("{0:0.00}", item.Rental.Price)
                 </td>
 
                 <td>
