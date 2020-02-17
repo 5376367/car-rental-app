@@ -23,5 +23,12 @@ namespace theking.Models
         public string Notes { get; set; }
         public Nullable<int> MileageOut { get; set; }
         public Nullable<int> MileageIn { get; set; }
+        public Nullable<decimal> Price { get; set; }
+        public Nullable<bool> SeasonHigh { get; set; }
+        public Nullable<int> FreeKMs { get; set; }
+        public Nullable<int> KMsUsed { get; set; }
+        public Nullable<decimal> PriceKM { get; set; }
+        public Nullable<decimal> PriceDay { get; set; }
+        public Nullable<int> Days { get; set; }
     }
 }

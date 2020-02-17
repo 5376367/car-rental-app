@@ -77,6 +77,13 @@
           <Property Name="MileageIn" Type="int" />
           <Property Name="Status" Type="bit" />
           <Property Name="Notes" Type="varchar" MaxLength="255" />
+          <Property Name="Price" Type="money" />
+          <Property Name="SeasonHigh" Type="bit" />
+          <Property Name="FreeKMs" Type="int" />
+          <Property Name="KMsUsed" Type="int" />
+          <Property Name="PriceKM" Type="money" />
+          <Property Name="PriceDay" Type="money" />
+          <Property Name="Days" Type="int" />
         </EntityType>
         <EntityType Name="Seasons">
           <Key>
@@ -157,6 +164,13 @@
           <Property Name="Notes" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="MileageOut" Type="Int32" />
           <Property Name="MileageIn" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SeasonHigh" Type="Boolean" />
+          <Property Name="FreeKMs" Type="Int32" />
+          <Property Name="KMsUsed" Type="Int32" />
+          <Property Name="PriceKM" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PriceDay" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Days" Type="Int32" />
         </EntityType>
         <EntityContainer Name="CarRentalDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Bookings" EntityType="Self.Booking" />
@@ -246,6 +260,13 @@
           <EntitySetMapping Name="Rentals">
             <EntityTypeMapping TypeName="CarRentalDBModel.Rental">
               <MappingFragment StoreEntitySet="Rentals">
+                <ScalarProperty Name="Days" ColumnName="Days" />
+                <ScalarProperty Name="PriceDay" ColumnName="PriceDay" />
+                <ScalarProperty Name="PriceKM" ColumnName="PriceKM" />
+                <ScalarProperty Name="KMsUsed" ColumnName="KMsUsed" />
+                <ScalarProperty Name="FreeKMs" ColumnName="FreeKMs" />
+                <ScalarProperty Name="SeasonHigh" ColumnName="SeasonHigh" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="MileageIn" ColumnName="MileageIn" />
                 <ScalarProperty Name="MileageOut" ColumnName="MileageOut" />
                 <ScalarProperty Name="id" ColumnName="id" />
