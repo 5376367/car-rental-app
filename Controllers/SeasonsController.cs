@@ -17,8 +17,14 @@ namespace theking.Controllers
         // GET: Seasons
         public ActionResult Index()
         {
-            return View(db.Seasons.ToList());
+            var seasons = (from sea in db.Seasons
+                         orderby sea.StartDate 
+                         select sea).ToList();
+            return View(seasons);
         }
+
+    
+             
 
         // GET: Seasons/Details/5
         public ActionResult Details(int? id)
