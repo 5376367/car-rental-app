@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -103,8 +103,6 @@ namespace theking.Controllers
         }
 
         // POST: Cars/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,Class,CarType,Make,Model,Color,Doors,KMs,LicensePlate,DateOnRoad,NextServiceDate,NextServiceKMS,StatusInService,StatusRented,CustID,Notes")] Car car)
@@ -138,8 +136,6 @@ namespace theking.Controllers
         }
 
         // POST: Cars/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,Class,CarType,Make,Model,Color,Doors,KMs,LicensePlate,DateOnRoad,NextServiceDate,NextServiceKMS,StatusInService,StatusRented,CustID,Notes")] Car car)

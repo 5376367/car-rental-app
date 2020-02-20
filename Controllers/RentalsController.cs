@@ -79,53 +79,6 @@ namespace theking.Controllers
         }
 
 
-        //all four of these posts are exactky the same. is tehre a way to use post method from different gets to same post??
-        // POST: Rentals/CreateNoParams
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateNoParams([Bind(Include = "id,CustID,CarID,DateOut,DateIn,Status,Notes")] Rental rental)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Rentals.Add(rental);
-                rental.Status = true;
-                rental.DateOut = DateTime.Now;
-                Car car = db.Cars.Find(rental.CarID);
-                rental.MileageOut = car.KMs;
-                car.CustID = rental.CustID;
-                car.StatusRented = true;
-                Price price = (from pri in db.Prices
-                               where pri.Class == car.Class
-                               select pri).FirstOrDefault();
-                //the following line will return the wrong info if car was returned different year to when it was taken
-                int daysExpected = (rental.DateIn.Value.DayOfYear - rental.DateOut.Value.DayOfYear) + 1;
-                int? freeKms = daysExpected * price.FreeKMs;
-                //the following code will only get high season if the whole rental was within high season. this must be fixed
-                var season = (from sea in db.Seasons
-                              where rental.DateOut >= sea.StartDate
-                              where rental.DateIn <= sea.EndDate
-                              select sea.High).FirstOrDefault();
-                if (season == true)
-                {
-                    rental.PriceDay = price.HighSeasonDay;
-                    rental.PriceKM = price.HighSeasonKM;
-                }
-                else
-                {
-                    rental.PriceDay = price.LowSeasonDay;
-                    rental.PriceKM = price.LowSeasonKM;
-
-                }
-                rental.FreeKMs = freeKms/daysExpected;
-                rental.SeasonHigh = season;
-                rental.Days = daysExpected;
-                db.SaveChanges();
-                return RedirectToAction("Details", new { id = rental.id });
-                //return RedirectToAction("Index");
-            }
-
-            return View(rental);
-        }
 
         // GET: Rentals/CreateFromCustomer
         public ActionResult CreateFromCustomer(int CustID)
@@ -139,54 +92,7 @@ namespace theking.Controllers
         }
 
       
-
-        // POST: Rentals/CreateFromCustomer
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateFromCustomer([Bind(Include = "id,CustID,CarID,DateOut,DateIn,Status,Notes")] Rental rental)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Rentals.Add(rental);
-                rental.Status = true;
-                rental.DateOut = DateTime.Now;
-                Car car = db.Cars.Find(rental.CarID);
-                rental.MileageOut = car.KMs;
-                car.CustID = rental.CustID;
-                car.StatusRented = true;
-                Price price = (from pri in db.Prices
-                               where pri.Class == car.Class
-                               select pri).FirstOrDefault();
-                //the following line will return the wrong info if car was returned different year to when it was taken
-                int daysExpected = (rental.DateIn.Value.DayOfYear - rental.DateOut.Value.DayOfYear) + 1;
-                int? freeKms = daysExpected * price.FreeKMs;
-                //the following code will only get high season if the whole rental was within high season. this must be fixed
-                var season = (from sea in db.Seasons
-                              where rental.DateOut >= sea.StartDate
-                              where rental.DateIn <= sea.EndDate
-                              select sea.High).FirstOrDefault();
-                if (season == true)
-                {
-                    rental.PriceDay = price.HighSeasonDay;
-                    rental.PriceKM = price.HighSeasonKM;
-                }
-                else
-                {
-                    rental.PriceDay = price.LowSeasonDay;
-                    rental.PriceKM = price.LowSeasonKM;
-
-                }
-                rental.FreeKMs = freeKms / daysExpected;
-                rental.SeasonHigh = season;
-                rental.Days = daysExpected;
-                db.SaveChanges();
-                return RedirectToAction("Details", new { id = rental.id });
-                //return RedirectToAction("Index");
-            }
-
-            return View(rental);
-        }
-        // GET: Rentals/CreateFromCar
+        //GET: Rentals/CreateFromCar
         public ActionResult CreateFromCar(int CarID)
         {
             List<Customer> CustomersList = new List<Customer>();
@@ -196,54 +102,6 @@ namespace theking.Controllers
             return View();
         }
 
-
-
-        // POST: Rentals/CreateFromCar
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateFromCar([Bind(Include = "id,CustID,CarID,DateOut,DateIn,Status,Notes")] Rental rental)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Rentals.Add(rental);
-                rental.Status = true;
-                rental.DateOut = DateTime.Now;
-                Car car = db.Cars.Find(rental.CarID);
-                rental.MileageOut = car.KMs;
-                car.CustID = rental.CustID;
-                car.StatusRented = true;
-                Price price = (from pri in db.Prices
-                               where pri.Class == car.Class
-                               select pri).FirstOrDefault();
-                //the following line will return the wrong info if car was returned different year to when it was taken
-                int daysExpected = (rental.DateIn.Value.DayOfYear - rental.DateOut.Value.DayOfYear) + 1;
-                int? freeKms = daysExpected * price.FreeKMs;
-                //the following code will only get high season if the whole rental was within high season. this must be fixed
-                var season = (from sea in db.Seasons
-                              where rental.DateOut >= sea.StartDate
-                              where rental.DateIn <= sea.EndDate
-                              select sea.High).FirstOrDefault();
-                if (season == true)
-                {
-                    rental.PriceDay = price.HighSeasonDay;
-                    rental.PriceKM = price.HighSeasonKM;
-                }
-                else
-                {
-                    rental.PriceDay = price.LowSeasonDay;
-                    rental.PriceKM = price.LowSeasonKM;
-
-                }
-                rental.FreeKMs = freeKms / daysExpected;
-                rental.SeasonHigh = season;
-                rental.Days = daysExpected;
-                db.SaveChanges();
-                return RedirectToAction("Details", new { id = rental.id });
-                //return RedirectToAction("Index");
-            }
-
-            return View(rental);
-        }
 
 
         // GET: Rentals/CreateFromBooking
@@ -272,12 +130,10 @@ namespace theking.Controllers
             return View();
         }
 
-
-
-        // POST: Rentals/CreateFromBooking
+        // POST: Rentals/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateFromBooking([Bind(Include = "id,CustID,CarID,DateOut,DateIn,Status,Notes")] Rental rental)
+        public ActionResult Create([Bind(Include = "id,CustID,CarID,DateOut,DateIn,Status,Notes")] Rental rental)
         {
             if (ModelState.IsValid)
             {
@@ -315,11 +171,11 @@ namespace theking.Controllers
                 rental.Days = daysExpected;
                 db.SaveChanges();
                 return RedirectToAction("Details", new { id = rental.id });
-                //return RedirectToAction("Index");
             }
 
             return View(rental);
         }
+
 
         // GET: Rentals/Edit/5
         public ActionResult Edit(int? id)
@@ -337,8 +193,6 @@ namespace theking.Controllers
         }
 
         // POST: Rentals/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,CustID,CarID,DateOut,DateIn,Status,Notes")] Rental rental)
