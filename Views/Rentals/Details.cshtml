@@ -44,10 +44,10 @@
 
     <hr />
     Date Taken:
-    @Model.Rental.DateOut.Value.ToShortDateString()
+    @Model.Rental.DateOut.Value.ToString("dd/MM/yyyy")
     <br />
     Return Date:
-    @Model.Rental.DateIn.Value.ToShortDateString()
+    @Model.Rental.DateIn.Value.ToString("dd/MM/yyyy")
     <br />
     Mileage when taken:
     @Model.Rental.MileageOut
@@ -94,6 +94,8 @@
 
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("List of all rentals", "Index")
+    <br />
+
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) 
 </p>
