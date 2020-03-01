@@ -25,7 +25,7 @@ namespace theking.Controllers
             client.BaseUrl = new Uri("https://api.mailgun.net/v3");
             client.Authenticator =
                new HttpBasicAuthenticator("api",
-                               "e9fa19a3d17ba1ab5b99c0088732b62e-9dda225e-a1691ce8");
+                               "key removed");
             RestRequest request = new RestRequest();
             request.AddParameter("domain", "sandbox73aac42755ff45278fb5b15452375562.mailgun.org", ParameterType.UrlSegment);
             request.Resource = "{domain}/messages";
