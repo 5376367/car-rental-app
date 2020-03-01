@@ -25,7 +25,7 @@ namespace theking.Controllers
             client.BaseUrl = new Uri("https://api.mailgun.net/v3");
             client.Authenticator =
                new HttpBasicAuthenticator("api",
-                               "key removed");
+                               "key-c00489da9c68bb2548c9c5d42578663c");
             RestRequest request = new RestRequest();
             request.AddParameter("domain", "sandbox73aac42755ff45278fb5b15452375562.mailgun.org", ParameterType.UrlSegment);
             request.Resource = "{domain}/messages";
@@ -174,10 +174,11 @@ namespace theking.Controllers
                 if (daysExpected == 0) daysExpected = 1;
                 int? freeKms = daysExpected * price.FreeKMs;
                 //the following code will only get high season if the whole rental was within high season. this must be fixed
-                var season = (from sea in db.Seasons
-                              where rental.DateOut >= sea.StartDate
-                              where rental.DateIn <= sea.EndDate
-                              select sea.High).FirstOrDefault();
+                //var season = (from sea in db.Seasons
+                //              where rental.DateOut >= sea.StartDate
+                //              where rental.DateIn <= sea.EndDate
+                //              select sea.High).FirstOrDefault();
+                bool season = true; 
                 if (season == true)
                 {
                     rental.PriceDay = price.HighSeasonDay;
@@ -291,10 +292,11 @@ namespace theking.Controllers
                     kmsToCharge = kmsUsed - freeKms;
                 };
                 //the following code will only get high season if the whole rental was within high season. this must be fixed
-                var season = (from sea in db.Seasons
-                              where rental.DateOut >= sea.StartDate
-                              where rental.DateIn <= sea.EndDate
-                              select sea.High).FirstOrDefault();
+                //var season = (from sea in db.Seasons
+                //              where rental.DateOut >= sea.StartDate
+                //              where rental.DateIn <= sea.EndDate
+                //              select sea.High).FirstOrDefault();
+                bool season = true;
                 if (season == true)
                 {
                     rental.Price = price.HighSeasonDay * daysUsed + kmsToCharge * price.HighSeasonKM;
@@ -317,14 +319,14 @@ namespace theking.Controllers
                 Customer customer = db.Customers.Find(car.CustID);
                 string seasonString = season == true ? "high" : "low";
                 //first parameter should be customer.email, but since no domain set up yet, can't use other email addresses
-                SendEmail("eliandrivka@gmail.com", "Car Returned",
+                SendEmail("5376367@gmail.com", "Car Returned",
                     $"Hi {customer.FirstName} {customer.LastName} \n \n" +
                     $"Thank you for renting a car from The King Car! \n \n" +
                     $"Details of your rental: \n" +
                     $"{car.Color} {car.Make} {car.Model} \n" +
                     $"License Plate Number: {car.LicensePlate} \n" +
                     $"Class: ({car.Class}) {car.CarType} \n" +
-                    $"Mileage Out: {rental.MileageIn} KM \n" +
+                    $"Mileage Out: {rental.MileageOut} KM \n" +
                     $"Mileage In: {rental.MileageIn} KM \n \n" +
                     $"You took the car on {rental.DateOut.Value.ToShortDateString()} and returned it on {rental.DateIn.Value.ToShortDateString()}  - {daysUsed} day(s). \n" +
                     $"The price per day in {seasonString} season was {rental.PriceDay.Value.ToString("F")}₪ \n" +
@@ -340,7 +342,7 @@ namespace theking.Controllers
             return View(rental);
         }
      
-        public ActionResult ReturnFromCar(int CarID)
+        public ActionResult ReturnFromCar(int CarID) 
         {
             var rental = (from rent in db.Rentals
                           where rent.CarID == CarID && rent.Status == true  
@@ -350,59 +352,60 @@ namespace theking.Controllers
         }
 
         // POST: Rentals/ReturnFromCar/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult ReturnFromCar([Bind(Include = "id,CustID,CarID,DateOut,DateIn,Status,MileageOut, MileageIn, Notes")] Rental rental)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(rental).State = EntityState.Modified;
-                rental.Status = false;
-                rental.DateIn = DateTime.Now;
-                var car = db.Cars.SingleOrDefault(b => b.id == rental.CarID);
-                car.StatusRented = false;
-                car.KMs = rental.MileageIn;
-                Price price = (from pri in db.Prices
-                               where pri.Class == car.Class
-                               select pri).FirstOrDefault();
-                int? kmsUsed = rental.MileageIn - rental.MileageOut;
-                //the following line will return the wrong info if car was returned different year to when it was taken
-                int daysUsed = (rental.DateIn.Value.DayOfYear - rental.DateOut.Value.DayOfYear) + 1;
-                int? freeKms = daysUsed * price.FreeKMs;
-                int? kmsToCharge = 0;
-                if (kmsUsed > freeKms)
-                {
-                    kmsToCharge = kmsUsed - freeKms;
-                };
-                //the following code will only get high season if the whole rental was within high season. this must be fixed
-                var season = (from sea in db.Seasons
-                              where rental.DateOut >= sea.StartDate
-                              where rental.DateIn <= sea.EndDate
-                              select sea.High).FirstOrDefault();
-                if (season == true)
-                {
-                    rental.Price = price.HighSeasonDay * daysUsed + kmsToCharge * price.HighSeasonKM;
-                    rental.PriceDay = price.HighSeasonDay;
-                    rental.PriceKM = price.HighSeasonKM;
-                }
-                else
-                {
-                    rental.Price = price.LowSeasonDay * daysUsed + kmsToCharge * price.LowSeasonKM;
-                    rental.PriceDay = price.LowSeasonDay;
-                    rental.PriceKM = price.LowSeasonKM;
 
-                }
-                rental.KMsUsed = kmsUsed;
-                rental.FreeKMs = freeKms;
-                rental.SeasonHigh = season;
-                rental.Days = daysUsed;
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult ReturnFromCar([Bind(Include = "id,CustID,CarID,DateOut,DateIn,Status,MileageOut, MileageIn, Notes")] Rental rental)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(rental).State = EntityState.Modified;
+        //        rental.Status = false;
+        //        rental.DateIn = DateTime.Now;
+        //        var car = db.Cars.SingleOrDefault(b => b.id == rental.CarID);
+        //        car.StatusRented = false;
+        //        car.KMs = rental.MileageIn;
+        //        Price price = (from pri in db.Prices
+        //                       where pri.Class == car.Class
+        //                       select pri).FirstOrDefault();
+        //        int? kmsUsed = rental.MileageIn - rental.MileageOut;
+        //        //the following line will return the wrong info if car was returned different year to when it was taken
+        //        int daysUsed = (rental.DateIn.Value.DayOfYear - rental.DateOut.Value.DayOfYear) + 1;
+        //        int? freeKms = daysUsed * price.FreeKMs;
+        //        int? kmsToCharge = 0;
+        //        if (kmsUsed > freeKms)
+        //        {
+        //            kmsToCharge = kmsUsed - freeKms;
+        //        };
+        //        //the following code will only get high season if the whole rental was within high season. this must be fixed
+        //        var season = (from sea in db.Seasons
+        //                      where rental.DateOut >= sea.StartDate
+        //                      where rental.DateIn <= sea.EndDate
+        //                      select sea.High).FirstOrDefault();
+        //        if (season == true)
+        //        {
+        //            rental.Price = price.HighSeasonDay * daysUsed + kmsToCharge * price.HighSeasonKM;
+        //            rental.PriceDay = price.HighSeasonDay;
+        //            rental.PriceKM = price.HighSeasonKM;
+        //        }
+        //        else
+        //        {
+        //            rental.Price = price.LowSeasonDay * daysUsed + kmsToCharge * price.LowSeasonKM;
+        //            rental.PriceDay = price.LowSeasonDay;
+        //            rental.PriceKM = price.LowSeasonKM;
+
+        //        }
+        //        rental.KMsUsed = kmsUsed;
+        //        rental.FreeKMs = freeKms;
+        //        rental.SeasonHigh = season;
+        //        rental.Days = daysUsed;
 
 
-                db.SaveChanges();
-                return RedirectToAction("Details", new { id = rental.id });
-            }
-            return View(rental);
-        }
+        //        db.SaveChanges();
+        //        return RedirectToAction("Details", new { id = rental.id });
+        //    }
+        //    return View(rental);
+        //}
 
 
         // GET: Rentals/Delete/5
